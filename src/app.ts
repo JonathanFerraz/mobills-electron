@@ -26,7 +26,7 @@ function createWindow(): void {
     y: lastWindowState.bounds.y,
     webPreferences: {
       nodeIntegration: false,
-      nativeWindowOpen: false,
+      nativeWindowOpen: true,
       preload: path.join(__dirname, 'preload'),
     },
     show: !shouldStartMinimized,
