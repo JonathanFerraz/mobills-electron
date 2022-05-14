@@ -3,12 +3,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import config, { ConfigKey } from './config';
 import { platform } from './helpers';
+// const remote = require('electron').remote;
 
 const shouldStartMinimized =
   app.commandLine.hasSwitch('launch-minimized') ||
   config.get(ConfigKey.LaunchMinimized);
 
-app.setAppUserModelId('io.cheung.gmail-desktop');
+app.setAppUserModelId('mobills.electron-typescript-desktop');
 
 let mainWindow: BrowserWindow;
 
@@ -58,6 +59,25 @@ function createWindow(): void {
     addCustomCSS(mainWindow);
   });
 }
+
+// document!?.getElementById('min-btn')!?.addEventListener('click', function () {
+//   var window = remote.getCurrentWindow();
+//   window.minimize();
+// });
+
+// document!?.getElementById('max-btn')!?.addEventListener('click', function () {
+//   var window = remote.getCurrentWindow();
+//   if (!window.isMaximized()) {
+//     window.maximize();
+//   } else {
+//     window.unmaximize();
+//   }
+// });
+
+// document!?.getElementById('close-btn')!?.addEventListener('click', function () {
+//   var window = remote.getCurrentWindow();
+//   window.close();
+// });
 
 function addCustomCSS(windowElement: BrowserWindow): void {
   windowElement.webContents.insertCSS(
