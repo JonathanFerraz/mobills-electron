@@ -1,0 +1,107 @@
+body {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(28, 28, 30);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(28, 28, 30);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+  background-color: darken(rgba(255, 255, 255, 0.1), 5%);
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Header */
+.istXrM {
+  position: fixed !important;
+  width: calc(100% - 9.9rem) !important;
+  padding: 6px 30px !important;
+  background-color: rgb(44, 44, 46) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  z-index: 100 !important;
+}
+
+/* Left Menu */
+
+.liTTkL:last-child {
+  display: none;
+}
+
+body
+  > div.MuiPopover-root.sc-jHxptj.jKrjJG
+  > div.MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded
+  > ul
+  > a:nth-child(4) {
+  display: none !important;
+}
+
+/* Main */
+
+.kFeyrb {
+  margin: 0px auto !important;
+  max-width: unset !important;
+  height: calc(100vh - 146px) !important;
+  overflow-y: scroll !important;
+  margin-top: 65px !important;
+  padding: 40px 10% !important;
+}
+
+@media (max-width: 1200px) {
+  .kFeyrb {
+    padding: 40px !important;
+  }
+}
+
+.kHQrUp {
+  height: 100vh !important;
+  position: relative !important;
+}
+
+.jLCoPq {
+  padding-bottom: 30px !important;
+}
+
+.dBAyZa {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-bottom: 0px !important;
+  position: relative !important;
+  left: 0px !important;
+  right: 0px !important;
+  margin: 0px !important;
+  bottom: 0px !important;
+}
+
+.iFsnpk {
+  display: none;
+}
+
+/* Perfil */
+
+.crVUpD {
+  padding-bottom: 75px !important;
+}
+
+.bfQJfw {
+  display: none;
+}
