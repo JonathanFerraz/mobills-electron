@@ -31,7 +31,15 @@ function createWindow(): void {
     show: !shouldStartMinimized,
     icon: path.join(__dirname, '..', 'static', 'icon.ico'),
     darkTheme: nativeTheme.shouldUseDarkColors,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: 'rgb(44, 44, 46)',
+      symbolColor: '#FFF',
+    },
+    frame: false,
   });
+
+  mainWindow.removeMenu();
 
   if (lastWindowState.fullscreen && !mainWindow.isFullScreen()) {
     mainWindow.setFullScreen(lastWindowState.fullscreen);
@@ -76,6 +84,12 @@ function addCustomCSS(windowElement: BrowserWindow): void {
     );
   }
 }
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
 app.on('activate', () => {
   if (mainWindow) {
