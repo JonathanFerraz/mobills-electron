@@ -1,11 +1,13 @@
 {
   "name": "mobills-electron",
   "productName": "Mobills",
-  "version": "1.0.1",
-  "description": "Mobills electron in typescript",
+  "version": "1.2.0",
+  "description": "Desktop Client for Mobills, https://web.mobills.com.br",
   "private": true,
   "repository": "jonathanferraz/mobills-electron",
-  "author": "Jonathan Ferraz <jonathanferraz.chagas@gmail.com>",
+  "appId": "desktop.mobills",
+  "appUrl": "https://web.mobills.com.br/dashboard",
+  "author": "Jonathan Ferraz <dev@johnferraz.com>",
   "license": "MIT",
   "main": "dist-js/app.js",
   "scripts": {
@@ -21,9 +23,11 @@
     "electron-store": "^8.0.1",
     "electron-util": "^0.17.2",
     "got": "^11.8.2",
+    "jsonfile": "^6.1.0",
     "p-wait-for": "^3.2.0"
   },
   "devDependencies": {
+    "@types/jsonfile": "^6.1.0",
     "electron": "^13.1.7",
     "electron-builder": "^23.0.3",
     "npm-run-all": "^4.1.5",
@@ -37,7 +41,7 @@
       "**/*",
       "!static${/*}"
     ],
-    "appId": "mobills.electron-typescript-desktop",
+    "appId": "desktop.mobills",
     "win": {
       "verifyUpdateCodeSignature": false,
       "target": [

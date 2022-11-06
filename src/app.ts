@@ -1,16 +1,35 @@
 import { app, BrowserWindow, nativeTheme } from 'electron';
 import * as fs from 'fs';
+import * as jsonfile from 'jsonfile';
 import * as path from 'path';
 import config, { ConfigKey } from './config';
 import { platform } from './helpers';
+
+const pkgJSON = jsonfile.readFileSync(
+  path.join(__dirname, '..', 'package.json')
+);
 
 const shouldStartMinimized =
   app.commandLine.hasSwitch('launch-minimized') ||
   config.get(ConfigKey.LaunchMinimized);
 
-app.setAppUserModelId('mobills.electron-typescript-desktop');
+app.setAppUserModelId(pkgJSON.appId);
 
 let mainWindow: BrowserWindow;
+
+if (!app.requestSingleInstanceLock()) {
+  app.quit();
+}
+
+app.on('second-instance', () => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+    }
+
+    mainWindow.show();
+  }
+});
 
 function createWindow(): void {
   const lastWindowState = config.get(ConfigKey.LastWindowState);
@@ -27,16 +46,12 @@ function createWindow(): void {
       nodeIntegration: false,
       nativeWindowOpen: true,
       preload: path.join(__dirname, 'preload'),
+      devTools: false,
     },
     show: !shouldStartMinimized,
     icon: path.join(__dirname, '..', 'static', 'icon.ico'),
     darkTheme: nativeTheme.shouldUseDarkColors,
-    titleBarStyle: 'hidden',
-    titleBarOverlay: {
-      color: 'rgb(44, 44, 46)',
-      symbolColor: '#FFF',
-    },
-    frame: false,
+    frame: true,
   });
 
   mainWindow.removeMenu();
@@ -49,7 +64,7 @@ function createWindow(): void {
     mainWindow.maximize();
   }
 
-  mainWindow.loadURL('https://web.mobills.com.br/dashboard'); // use desired URL
+  mainWindow.loadURL(config.get(ConfigKey.AppUrl));
 
   mainWindow.on('app-command', (_event, command) => {
     if (command === 'browser-backward' && mainWindow.webContents.canGoBack()) {
@@ -85,19 +100,33 @@ function addCustomCSS(windowElement: BrowserWindow): void {
   }
 }
 
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
 app.on('activate', () => {
   if (mainWindow) {
     mainWindow.show();
   }
 });
 
-app.whenReady().then(() => {
+app.on('before-quit', () => {
+  if (mainWindow) {
+    config.set(ConfigKey.LastWindowState, {
+      bounds: mainWindow.getBounds(),
+      fullscreen: mainWindow.isFullScreen(),
+      maximized: mainWindow.isMaximized(),
+    });
+    mainWindow.removeAllListeners('close');
+    mainWindow.close();
+  }
+});
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+(async () => {
+  await Promise.all([app.whenReady()]);
+
   createWindow();
 
   const { webContents } = mainWindow!;
@@ -107,4 +136,4 @@ app.whenReady().then(() => {
       mainWindow.show();
     }
   });
-});
+})();

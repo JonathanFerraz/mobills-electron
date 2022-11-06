@@ -1,5 +1,12 @@
-import Store from 'electron-store';
+import * as path from 'path';
 import { is } from 'electron-util';
+import * as jsonfile from 'jsonfile';
+
+import Store = require('electron-store');
+
+const pkgJSON = jsonfile.readFileSync(
+  path.join(__dirname, '..', 'package.json')
+);
 
 interface LastWindowState {
   bounds: {
@@ -13,16 +20,23 @@ interface LastWindowState {
 }
 
 export enum ConfigKey {
+  AppUrl = 'appUrl',
   LastWindowState = 'lastWindowState',
   LaunchMinimized = 'launchMinimized',
+  TrustedHosts = 'trustedHosts',
+  ConfirmExternalLinks = 'confirmExternalLinks',
 }
 
 type TypedStore = {
+  [ConfigKey.AppUrl]: string;
   [ConfigKey.LastWindowState]: LastWindowState;
   [ConfigKey.LaunchMinimized]: boolean;
+  [ConfigKey.TrustedHosts]: string[];
+  [ConfigKey.ConfirmExternalLinks]: boolean;
 };
 
 const defaults: TypedStore = {
+  [ConfigKey.AppUrl]: pkgJSON.appUrl,
   [ConfigKey.LastWindowState]: {
     bounds: {
       width: 992,
@@ -34,6 +48,8 @@ const defaults: TypedStore = {
     maximized: false,
   },
   [ConfigKey.LaunchMinimized]: false,
+  [ConfigKey.TrustedHosts]: [],
+  [ConfigKey.ConfirmExternalLinks]: true,
 };
 
 const config = new Store<TypedStore>({
