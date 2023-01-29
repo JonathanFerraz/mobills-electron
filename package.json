@@ -13,6 +13,8 @@
   "scripts": {
     "start": "tsc && electron .",
     "build:windows": "electron-builder --windows --publish never",
+    "build:macos": "electron-builder --macos --universal --publish never",
+    "build:linux": "electron-builder --linux --publish never",
     "compile": "tsc",
     "prettier": "prettier --write",
     "prettify": "yarn prettier -- '**/*.{ts,js,css,json}'",
@@ -49,6 +51,11 @@
         "zip"
       ],
       "icon": "static/icon.png"
+    },
+    "mac": {
+      "category": "public.app-category.finance",
+      "darkModeSupport": true,
+      "icon": "static/icon.icns"
     }
   }
 }
